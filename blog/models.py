@@ -19,3 +19,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     timeStamp = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+
+# class UserProfile(models.Model):
+#     user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
+

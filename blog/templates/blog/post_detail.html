@@ -12,7 +12,13 @@
     </div>
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom">
-            <p><strong>{{post.author}} </strong>{{post.timeStamp}}</p>
+            <p>
+            <strong>{{post.author}} </strong>{{post.timeStamp}}
+            {% if request.user == post.author %}
+            <a href="{% url 'post-edit' post.pk %}" style="color: crimson;"><i class="far fa-edit"></i></a>
+            <a href="{% url 'post-delete' post.pk %}" style="color: crimson;"><i class="fas fa-trash"></i></a>
+            {% endif %}
+            </p>
             <p><strong>{{post.title}}</strong></p>
             <p>{{post.contents}}</p>            
         </div>
@@ -28,5 +34,18 @@
             </form>
         </div>
     </div>
+    {% for comment in comments %}
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom">
+            <p>
+            <strong>{{comment.author}} </strong>{{comment.timeStamp}}
+             {% if request.user == comment.author %}
+                <a href="{% url 'comment-delete' post.pk comment.pk %}" style="color: crimson;"><i class="fas fa-trash"></i></a>
+            {% endif %}
+            </p>
+            <p>{{comment.comment}}</p>            
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock content %}

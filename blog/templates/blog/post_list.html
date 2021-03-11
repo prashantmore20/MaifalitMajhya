@@ -10,6 +10,7 @@
             <h5>Add a Post!!</h5>
         </div>
     </div>
+{% comment %} {% if request.user == admin %} {% endcomment %}
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom">
             <form method="POST">
@@ -21,6 +22,7 @@
             </form>
         </div>
     </div>
+{% comment %} {% endif %} {% endcomment %}
 {% for post in post_list %}
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom position-relative">
