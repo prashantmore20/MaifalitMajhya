@@ -7,10 +7,10 @@
 <div class="container">
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom">
-            <h5>Add a Post!!</h5>
+            <h5>My Posts!!</h5>
         </div>
     </div>
-{% comment %} {% if request.user == admin %} {% endcomment %}
+{% comment %} 
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom">
             <form method="POST">
@@ -22,14 +22,16 @@
             </form>
         </div>
     </div>
-{% comment %} {% endif %} {% endcomment %}
+{% endcomment %}
 {% for post in post_list %}
     <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom position-relative">
-            <p><strong>{{post.author}} </strong>{{post.timeStamp}}</p>
-            <p><strong>{{post.title}}</strong></p>
-            <p>{{post.contents}}</p>
-            <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>            
+        <div class="col-md-5 col-sm-12 border-bottom">
+            <p> <a style="text-decoration:none" class="text-primary" href="{% url 'profile' post.author.profile.pk %}">@ {{post.author}} </a>{{post.timeStamp}}</p>
+            <div class="position-relative">
+                <p><strong>{{post.title}}</strong></p>
+                <p>{{post.contents}}</p>
+                <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>            
+            </div>    
         </div>
     </div>
 {% endfor %}
