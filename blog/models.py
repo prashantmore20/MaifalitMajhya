@@ -9,9 +9,10 @@ from django.dispatch import receiver
 class Post(models.Model):
     title = models.CharField(max_length=255)
     contents = models.TextField()
-    # slug = models.CharField(max_length=255)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     timeStamp = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(User, blank=True, related_name='likes')
+    dislikes = models.ManyToManyField(User, blank=True, related_name='dislikes')
 
     def __str__(self):
         return 'Gazal/Poem ' + self.title
