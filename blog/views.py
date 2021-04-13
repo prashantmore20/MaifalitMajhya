@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -123,16 +124,12 @@ class ProfileView(View):
             else:
                 is_following = False
 
-        follower_name = followers
-        list_follower_name = list(follower_name)
-
-        context = {
+            context = {
             'user': user,
             'profile': profile,
             'posts': posts,
             'number_of_followers': number_of_followers,
             'is_following': is_following,
-            'list_follower_name': list_follower_name
         }
 
         return render(request, 'blog/profile.html', context)
@@ -223,3 +220,28 @@ class AddDislike(LoginRequiredMixin, View):
 
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
+
+class PostSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        post_list = Post.objects.filter(
+            Q(contents__icontains=query)
+        )
+
+        context={
+            'post_list':post_list,
+        }
+    
+        return render(request, 'blog/search.html', context)
+
+class ListFollower(View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        followers = profile.followers.all()
+
+        context={
+            'profile': profile,
+            'followers': followers,
+        }
+
+        return render(request, 'blog/followers_list.html', context)

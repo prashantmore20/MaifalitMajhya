@@ -1,0 +1,26 @@
+.remove-default{
+    background-color: transparent; 
+    border: none; 
+    box-shadow: none;
+}
+
+.edit-colour-red{
+    color: crimson;
+}
+
+.edit-colour-blue{
+    color:blue;
+}
+
+.post-link{
+    text-decoration: none;
+}
+
+.post-text{
+    padding-top: 0.5rem;
+}
+
+.post-img{
+    float: left;
+    margin-right: 1rem;
+}

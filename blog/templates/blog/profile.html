@@ -18,20 +18,19 @@
             <h3 class="py-4">{{ profile.name }}
                 <span>
                     {% if request.user == user %}
-                        <a href="{% url 'profile-edit' profile.pk %}" style="color: crimson;"><i class="far fa-edit"></i></a>
+                        <a href="{% url 'profile-edit' profile.pk %}" class="edit-colour-blue"><i class="far fa-edit"></i></a>
                     {% endif %}
                 </span>
             {% else %}
             <h3>{{ user.username}}
                 <span>
                     {% if request.user == user %}
-                        <a href="{% url 'profile-edit' profile.pk %}" style="color: crimson;"><i class="far fa-edit"></i></a>
+                        <a href="{% url 'profile-edit' profile.pk %}" class="edit-colour-red"><i class="far fa-edit"></i></a>
                     {% endif %}
                 </span>
             </h3>
             {% endif %}
             </h3>
-
             {% if profile.birthDate %}
             <p>{{ profile.birthDate }}</p>
             {% endif %}
@@ -43,32 +42,37 @@
             {% if profile.bio %}
             <p>{{ profile.bio }}</p>
             {% endif %}
-                <div class="mb-3">
-                    <p>Followers : {{ number_of_followers }}</p>
-                    <p>{{ list_follower_name }}</p>
-
-                    {% if user == request.user %}
-                    {% else %}
-                    {% if is_following %}
-                        <form Method='POST' action="{% url 'remove-follower' profile.pk %}">
-                            {% csrf_token %}
-                            <button class="btn btn-outline-danger" type="submit">UnFollow</button>
-                        </form>
-                    {% else %}
-                        <form Method='POST' action="{% url 'add-follower' profile.pk %}">
-                            {% csrf_token %}
-                            <button class="btn btn-outline-success" type="submit">Follow</button>
-                        </form>
-                    {% endif %}
-                    {% endif %}
-                </div>
+            <div class="mb-3">
+                <a href="{% url 'list-followers' profile.pk %}" class="post-link">Followers: {{ number_of_followers }}</a>
+            </div>                    
+            {% if user == request.user %}
+                {% else %}
+                {% if is_following %}
+                    <form Method='POST' action="{% url 'remove-follower' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">UnFollow</button>
+                    </form>
+                {% else %}
+                    <form Method='POST' action="{% url 'add-follower' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-success" type="submit">Follow</button>
+                    </form>
+                {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% comment %} {% endif %} {% endcomment %}
 {% for post in posts %}
     <div class="row justify-content-center mt-5">
         <div class="col-md-8 col-sm-12 border-bottom position-relative">
-            <p> <a style="text-decoration:none" class="text-primary" href="{% url 'profile' post.author.profile.pk %}">@ {{post.author}} </a>{{post.timeStamp}}</p>
+            <div>
+                <a href="{% url 'profile' post.author.profile.pk %}">
+                    <img class="rounded-circle post-img" height=30 width=30 src="{{ post.author.profile.picture.url }}" alt="user"/>
+                <p class="post-text"> 
+                    <a class="text-primary post-link" href="{% url 'profile' post.author.profile.pk %}">@ {{post.author}} </a>{{post.timeStamp}}
+                </p>
+            </div>
             <div class="position-relative">
                 <p><strong>{{post.title}}</strong></p>
                 <p>{{post.contents}}</p>
@@ -78,7 +82,7 @@
                 <form method="POST" action="{% url 'like' post.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                    <button class="remove-default edit-colour-blue" type="submit">
                         <i class="far fa-thumbs-up"> <span>{{ post.likes.all.count }}</span></i>
                     </button>
                 </form>
@@ -86,7 +90,7 @@
                 <form method="POST" action="{% url 'dislike' post.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                    <button class="remove-default edit-colour-red"type="submit">
                         <i class="far fa-thumbs-down"> <span>{{ post.dislikes.all.count }}</span></i>
                     </button>
                 </form>
