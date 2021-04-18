@@ -52,3 +52,4 @@ function removeNotification(removeNotificationURL, redirectURL) {
 	xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
 	xmlhttp.send();
 }
+  
