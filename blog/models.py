@@ -8,6 +8,7 @@ from django.dispatch import receiver
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='uploads/post_photos', blank=True, null=True)
     contents = models.TextField()
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     timeStamp = models.DateTimeField(default=timezone.now)
