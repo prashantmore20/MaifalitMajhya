@@ -12,7 +12,7 @@
     </div>
 {% for post in post_list %}
     <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom">
+        <div class="col-md-5 col-sm-5">
             <div>
                 <a href="{% url 'profile' post.author.profile.pk %}">
                     <img class="rounded-circle post-img" height=30 width=30 src="{{ post.author.profile.picture.url }}" alt="user"/>
@@ -21,32 +21,41 @@
                 </p>
             </div>
             <div class="position-relative">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" class="post-image"/>
-                {% endif %}
-                <p><strong>{{post.title}}</strong></p>
-                <p>{{post.contents}}</p>
-                <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>            
-            </div>
-            <div class="d-flex flex-row">
-                <form method="POST" action="{% url 'like' post.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="remove-default edit-colour-blue" type="submit">
-                        <i class="far fa-thumbs-up"> <span>{{ post.likes.all.count }}</span></i>
-                    </button>
-                </form>
-
-                <form method="POST" action="{% url 'dislike' post.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="remove-default edit-colour-red" type="submit">
-                        <i class="far fa-thumbs-down"> <span>{{ post.dislikes.all.count }}</span></i>
-                    </button>
-                </form>
-            </div>
+                <div class="card mb-3" style="max-width: 25rem;">
+                    <div class="row g-0">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" class="post-image"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title"><p><strong>{{post.title}}</strong></p></h5>
+                            <p>{{post.contents}}</p>
+                            <p class="card-text"><small class="text-muted">Posted on {{post.timeStamp}}</small></p>
+                            <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>            
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <form method="POST" action="{% url 'like' post.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class="remove-default edit-colour-blue" type="submit">
+                                <i class="far fa-thumbs-up"> <span>{{ post.likes.all.count }}</span></i>
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'dislike' post.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class="remove-default edit-colour-red" type="submit">
+                                <i class="far fa-thumbs-down"> <span>{{ post.dislikes.all.count }}</span></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>                
         </div>
     </div>
+</div>
 {% endfor %}
 </div>
 {% endblock content %}
