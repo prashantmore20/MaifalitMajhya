@@ -90,3 +90,21 @@
 	transition: 0.3s;
 	cursor: pointer;
 }
+
+.home-container{
+	position: relative;
+	text-align: left;
+	color:black;
+}
+
+.writeup{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.Sher-line{
+	font-size: large;
+	font-weight: bold;
+}
